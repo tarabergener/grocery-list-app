@@ -1,8 +1,18 @@
 <div class="row">
   <div class="col-md-5">
-    <app-grocery-list></app-grocery-list>
+    <app-grocery-list
+      (itemWasSelected)="onItemSelected($event)"
+      (addItem)="onAddItem()"
+    ></app-grocery-list>
   </div>
   <div class="col-md-7">
-    <app-groceries-edit></app-groceries-edit>
+    <app-groceries-edit
+      *ngIf="selectedItem || showAddForm"
+      [grocery]="selectedItem"
+      (itemAdded)="onItemAdded($event)"
+    ></app-groceries-edit>
+    <ng-template #infoText>
+      <p>Please select a grocery item to edit or click "Add Grocery Item".</p>
+    </ng-template>
   </div>
 </div>

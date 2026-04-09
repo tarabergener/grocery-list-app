@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Groceries } from '../groceries.model';
 
 @Component({
@@ -16,7 +16,38 @@ export class GroceryListComponent implements OnInit {
     new Groceries('5', 'Chicken', 'Meat', 1, 5.0, false),
   ];
 
+  @Output() itemWasSelected = new EventEmitter<Groceries>();
+  @Output() addItem = new EventEmitter<void>();
+  @Output() itemAdded = new EventEmitter<Groceries>();
+
   constructor() {}
 
   ngOnInit(): void {}
+
+  onGrocerySelected(grocery: Groceries) {
+    console.log('Selected grocery:', grocery);
+    this.itemWasSelected.emit(grocery);
+  }
+
+  onAddItem() {
+    this.addItem.emit();
+  }
+
+  onPurchasedChanged(checked: boolean, item: Groceries) {
+    item.purchased = checked;
+    this.sortGroceries();
+  }
+
+  onItemAdded(grocery: Groceries) {
+    this.groceries.push(grocery);
+    this.sortGroceries();
+    this.itemAdded.emit(grocery);
+  }
+
+  sortGroceries() {
+    this.groceries.sort((a, b) => {
+      if (a.purchased === b.purchased) return 0;
+      return a.purchased ? 1 : -1;
+    });
+  }
 }

@@ -1,19 +1,17 @@
 <div class="row">
   <div class="col-xs-12">
-    <button class="btn btn-primary btn-block">Add Grocery Item</button>
+    <button class="btn btn-primary btn-block" (click)="onAddItem()">
+      Add Grocery Item
+    </button>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <a href="#" class="list-group-item clearfix" 
-    *ngFor="let item of groceries">
-      <span class="pull-left">{{ item.name }} - {{ item.price | currency }}</span>
-      <span class="pull-right">
-        <button class="btn btn-sm btn-info">Edit</button>
-        <button class="btn btn-sm btn-success">Details</button>
-        <button class="btn btn-sm btn-danger">Delete</button>
-      </span>
-    </a>
-    <app-grocery-item></app-grocery-item>
+    <app-grocery-item
+      *ngFor="let item of groceries"
+      [item]="item"
+      (grocerySelected)="onGrocerySelected(item)"
+      (purchasedChanged)="onPurchasedChanged($event, item)"
+    ></app-grocery-item>
   </div>
 </div>

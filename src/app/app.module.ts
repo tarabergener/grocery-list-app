@@ -10,6 +10,7 @@ import { GroceryItemComponent } from './groceries/grocery-item/grocery-item.comp
 import { CouponsComponent } from './coupons/coupons.component';
 import { GroceryListComponent } from './groceries/grocery-list/grocery-list.component';
 import { GroceriesEditComponent } from './groceries/groceries-edit/groceries-edit.component';
+import { DropdownDirective } from './shared/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { GroceriesEditComponent } from './groceries/groceries-edit/groceries-edi
     CouponsComponent,
     GroceryListComponent,
     GroceriesEditComponent,
+    DropdownDirective,
   ],
   imports: [BrowserModule, FormsModule],
   providers: [],
