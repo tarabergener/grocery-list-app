@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  loadedFeature = 'groceries';
+
+  onNavigate(feature: string) {
+    this.loadedFeature = feature;
+  }
   title = 'grocery-list-app';
 }
