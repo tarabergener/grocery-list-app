@@ -11,6 +11,7 @@ import { CouponsComponent } from './coupons/coupons.component';
 import { GroceryListComponent } from './groceries/grocery-list/grocery-list.component';
 import { GroceriesEditComponent } from './groceries/groceries-edit/groceries-edit.component';
 import { DropdownDirective } from './shared/dropdown.directive';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
     GroceriesEditComponent,
     DropdownDirective,
   ],
-  imports: [BrowserModule, FormsModule],
+  imports: [BrowserModule, FormsModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
 })

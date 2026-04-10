@@ -18,9 +18,7 @@ import { Groceries } from '../groceries.model';
   templateUrl: './groceries-edit.component.html',
   styleUrl: './groceries-edit.component.css',
 })
-export class GroceriesEditComponent
-  implements OnInit, OnChanges, AfterViewInit
-{
+export class GroceriesEditComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() grocery: Groceries | null = null;
   @Output() grocerySaved = new EventEmitter<Groceries>();
 
@@ -43,8 +41,7 @@ export class GroceriesEditComponent
     if (this.grocery && this.nameInputRef) {
       this.nameInputRef.nativeElement.value = this.grocery.name;
       this.categoryInputRef.nativeElement.value = this.grocery.category;
-      this.quantityInputRef.nativeElement.value =
-        this.grocery.quantity.toString();
+      this.quantityInputRef.nativeElement.value = this.grocery.quantity.toString();
       this.priceInputRef.nativeElement.value = this.grocery.price.toString();
     } else if (this.nameInputRef) {
       this.nameInputRef.nativeElement.value = '';
@@ -57,19 +54,9 @@ export class GroceriesEditComponent
   onSaveItem() {
     const itemName = this.nameInputRef.nativeElement.value;
     const itemCategory = this.categoryInputRef.nativeElement.value;
-    const itemQuantity = parseInt(
-      this.quantityInputRef.nativeElement.value,
-      10,
-    );
+    const itemQuantity = parseInt(this.quantityInputRef.nativeElement.value, 10);
     const itemPrice = parseFloat(this.priceInputRef.nativeElement.value);
-    const newGrocery = new Groceries(
-      Date.now().toString(),
-      itemName,
-      itemCategory,
-      itemQuantity,
-      itemPrice,
-      false,
-    );
+    const newGrocery = new Groceries(Date.now().toString(), itemName, itemCategory, itemQuantity, itemPrice, false);
     this.itemAdded.emit(newGrocery);
   }
 }
