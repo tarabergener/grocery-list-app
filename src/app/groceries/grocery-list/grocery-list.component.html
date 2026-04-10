@@ -10,7 +10,6 @@
     <app-grocery-item
       *ngFor="let item of groceries"
       [item]="item"
-      (grocerySelected)="onGrocerySelected(item)"
       (purchasedChanged)="onPurchasedChanged($event, item)"
     ></app-grocery-item>
   </div>

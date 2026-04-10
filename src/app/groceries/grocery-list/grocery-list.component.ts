@@ -1,5 +1,13 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Groceries } from '../groceries.model';
+import { GroceryListService } from './grocery-list.service';
 
 @Component({
   selector: 'app-grocery-list',
@@ -7,26 +15,22 @@ import { Groceries } from '../groceries.model';
   templateUrl: './grocery-list.component.html',
   styleUrl: './grocery-list.component.css',
 })
-export class GroceryListComponent implements OnInit {
-  groceries: Groceries[] = [
-    new Groceries('1', 'Milk', 'Dairy', 2, 1.5, false),
-    new Groceries('2', 'Bread', 'Bakery', 1, 2.0, false),
-    new Groceries('3', 'Eggs', 'Dairy', 12, 3.0, false),
-    new Groceries('4', 'Apples', 'Produce', 6, 0.5, false),
-    new Groceries('5', 'Chicken', 'Meat', 1, 5.0, false),
-  ];
+export class GroceryListComponent implements OnInit, OnDestroy {
+  groceries: Groceries[] = [];
 
-  @Output() itemWasSelected = new EventEmitter<Groceries>();
   @Output() addItem = new EventEmitter<void>();
   @Output() itemAdded = new EventEmitter<Groceries>();
 
-  constructor() {}
+  private groceriesSub: Subscription | undefined;
 
-  ngOnInit(): void {}
+  constructor(private groceryListService: GroceryListService) {}
 
-  onGrocerySelected(grocery: Groceries) {
-    console.log('Selected grocery:', grocery);
-    this.itemWasSelected.emit(grocery);
+  ngOnInit(): void {
+    this.groceriesSub = this.groceryListService
+      .getGroceries()
+      .subscribe((items) => {
+        this.groceries = items;
+      });
   }
 
   onAddItem() {
@@ -34,20 +38,17 @@ export class GroceryListComponent implements OnInit {
   }
 
   onPurchasedChanged(checked: boolean, item: Groceries) {
-    item.purchased = checked;
-    this.sortGroceries();
+    if (item && item.id) {
+      this.groceryListService.setPurchased(item.id, checked);
+    }
   }
 
   onItemAdded(grocery: Groceries) {
-    this.groceries.push(grocery);
-    this.sortGroceries();
+    this.groceryListService.addGrocery(grocery);
     this.itemAdded.emit(grocery);
   }
 
-  sortGroceries() {
-    this.groceries.sort((a, b) => {
-      if (a.purchased === b.purchased) return 0;
-      return a.purchased ? 1 : -1;
-    });
+  ngOnDestroy(): void {
+    this.groceriesSub?.unsubscribe();
   }
 }

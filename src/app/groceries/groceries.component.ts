@@ -1,20 +1,28 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Groceries } from './groceries.model';
 import { GroceryListComponent } from './grocery-list/grocery-list.component';
+import { GroceryService } from './groceries.service';
 
 @Component({
   selector: 'app-groceries',
   standalone: false,
   templateUrl: './groceries.component.html',
   styleUrl: './groceries.component.css',
+  providers: [GroceryService],
 })
-export class GroceriesComponent {
+export class GroceriesComponent implements OnInit {
   @ViewChild(GroceryListComponent) groceryListComponent: GroceryListComponent;
 
   selectedItem: Groceries | null = null;
   showAddForm: boolean = false;
 
-  constructor() {}
+  constructor(private groceryService: GroceryService) {}
+
+  ngOnInit() {
+    this.groceryService.itemSelected.subscribe((item: Groceries) => {
+      this.selectedItem = item;
+    });
+  }
 
   onItemSelected(item: Groceries) {
     this.selectedItem = item;

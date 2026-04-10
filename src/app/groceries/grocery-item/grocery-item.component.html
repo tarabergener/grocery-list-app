@@ -2,15 +2,15 @@
   href="#"
   class="list-group-item clearfix"
   (click)="onSelected()"
-  [style.background-color]="item.purchased ? 'lightgray' : 'transparent'"
+  [style.background-color]="item?.purchased ? 'lightgray' : 'transparent'"
 >
   <span class="pull-left">
     <input
       type="checkbox"
-      [checked]="item.purchased"
+      [checked]="item?.purchased"
       (change)="onPurchasedChange($event); $event.stopPropagation()"
     />
-    {{ item.name }} - {{ item.price | currency }}
+    {{ item?.name }} - {{ item?.price | currency }}
   </span>
   <span class="pull-right">
     <button class="btn btn-sm btn-info">Edit</button>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Groceries } from '../groceries.model';
+import { GroceryService } from '../groceries.service';
 
 @Component({
   selector: 'app-grocery-item',
@@ -9,16 +10,15 @@ import { Groceries } from '../groceries.model';
   styleUrl: './grocery-item.component.css',
 })
 export class GroceryItemComponent implements OnInit {
-  @Input() item: Groceries | null = null;
-  @Output() grocerySelected = new EventEmitter<void>();
+  @Input() item: Groceries | undefined;
   @Output() purchasedChanged = new EventEmitter<boolean>();
 
-  constructor() {}
+  constructor(private groceryService: GroceryService) {}
 
   ngOnInit(): void {}
 
   onSelected() {
-    this.grocerySelected.emit();
+    this.groceryService.itemSelected.emit(this.item);
   }
 
   onPurchasedChange(event: any) {
